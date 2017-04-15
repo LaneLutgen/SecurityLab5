@@ -1,0 +1,26 @@
+<file> ::= <host><policy>* 
+ 
+<host> ::= host=<ip>\n\n           
+<policy> ::= name=<string>\n                       
+	<(stateful_policy >|<stateless_policy)>\n 
+	<stateful_policy> ::= type=stateful\n                       
+		host_port=(any|<port>)\n                       
+		attacker_port=(any|<port>)\n                       
+		attacker=(any|<ip>)\n                       
+		(from_host|to_host)=<regexp>\n   
+		
+	<stateless_policy> ::= type=stateless\n                       
+		proto=tcp|udp\n                       
+		host_port=(any|<port>)\n                      
+		attacker_port=(any|<port>)\n                       
+		attacker=(any|<ip>)\n                       
+		<sub_policy>                       
+		<sub_policy>*        
+		
+	<sub_policy> ::= (from_host|to_host)=<regexp> (with flags=<flags>)?\n 
+         <string> ::= alpha-numeric string              
+         <ip> ::= string of form [0-255].[0-255].[0-255].[0-255]            
+         <port> ::= string of form [0-65535]          
+         <regexp> ::= Regular Expression           
+         <flags> ::= <flag>* 
+         <flag> ::= S|A|F|R|P|U 
