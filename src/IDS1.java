@@ -199,17 +199,17 @@ public class IDS1 {
 						}
 					}
 			
-					if(name.trim().equals("TFTP attacker")) {
+					if(name.trim().equals("TFTP attacker boot")) {
 						if(udp != null)
 							if(Match("vmlinuz",payload)) {
-								if(attacker_port.equals(udst)&&hostIP.equals(ips)) {
+								if(attacker_port.trim().equals(udst.trim())&&hostIP.trim().equals(ips.trim())) {
 									flag1 = true;
 								}
 							}
 				
 						if(udp != null)
 							if(Match("\\x00\\x03\\x00\\x01",payload)) {		
-								if(attacker_port.equals(usrc)&&hostIP.equals(ipd)) {
+								if(attacker_port.trim().equals(usrc.trim())&&hostIP.trim().equals(ipd)) {
 									flag2 = true;
 								}
 							}
@@ -234,7 +234,7 @@ public class IDS1 {
 		String ips = null, ipd = null;
 		Ip4 ip1 = new Ip4();
 	
-		if(type.equals("stateful")) {
+		if(type.trim().equals("stateful")) {
 			for(int i1=0; i1<packetslist.size()-1; i1++) {
 				if(packetslist.get(i1).hasHeader(Ip4.ID)) {
 					packetslist.get(i1).getHeader(ip1);
@@ -242,7 +242,7 @@ public class IDS1 {
 					ipd = org.jnetpcap.packet.format.FormatUtils.ip(ip1.destination());
 				}
 			
-				if(ips.equals(hostIP)||ipd.equals(hostIP)) {
+				if(ips.equals(hostIP.trim())||ipd.equals(hostIP.trim())) {
 					StringBuilder str = new StringBuilder();
 					packetslist.get(i1).getUTF8String(0, str, packetslist.get(i1).getTotalSize());
 					String data = str.toString();
