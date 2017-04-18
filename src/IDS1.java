@@ -181,19 +181,19 @@ public class IDS1 {
 						if(sr != null)
 							contains = Match(sr,payload);
            
-						if (contains && !flag1 && hostIP.equals(ips)  && tsrc.equals(host_port)) {
+						if (contains && !flag1 && hostIP.trim().equals(ips)  && tsrc.equals(host_port.trim())) {
 							flag1 = true;
            		  		}
-						else if (contains &&  flag1 && !flag2 && hostIP.equals(ipd)  && tdst.equals(host_port)) {
+						else if (contains &&  flag1 && !flag2 && hostIP.trim().equals(ipd)  && tdst.equals(host_port.trim())) {
 							flag2 = true;
            		 		}
-						else if (contains &&  flag1 && !flag3 && hostIP.equals(ips)  && tsrc.equals(host_port)) {
+						else if (contains &&  flag1 && !flag3 && hostIP.trim().equals(ips)  && tsrc.equals(host_port.trim())) {
 							flag3 = true;
 						}
-						else if (contains &&  flag1 && !flag4 && hostIP.equals(ipd)  && tdst.equals(host_port)) {
+						else if (contains &&  flag1 && !flag4 && hostIP.trim().equals(ipd)  && tdst.equals(host_port.trim())) {
 							flag4 = true;
            		  		}
-						else if (contains &&  flag1 &&  flag2 &&  flag3 &&  flag4 &&  !flag5 && hostIP.equals(ips)  && tsrc.equals(host_port)) {
+						else if (contains &&  flag1 &&  flag2 &&  flag3 &&  flag4 &&  !flag5 && hostIP.trim().equals(ips)  && tsrc.equals(host_port.trim())) {
 							flag5 = true;
 							System.out.println(name + " detected");
 						}
