@@ -18,7 +18,7 @@ import org.jnetpcap.protocol.tcpip.Udp;
 
 
 
-public class IDS {
+public class IDS1 {
 	static List<PcapPacket> packetslist=new ArrayList<PcapPacket>();
 
 	static String  hostIP = null;
@@ -53,14 +53,16 @@ public class IDS {
 				index = line.indexOf("=");
 				if(index != -1)
 					var = line.substring(0,index);
+				else
+					var = "";
 				if(var.equals("from_host")) {
 					i = i + 1;
 					var = var + i;
 				}
-				if(var.equals("to_host")) {
+				else if(var.equals("to_host")) {
 					j = j + 1;
 					var = var + j;
-				}
+				}	
 				
 				content = line.substring(index+1);
 				switch(var) {
@@ -108,7 +110,7 @@ public class IDS {
 		PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
 			public void nextPacket(PcapPacket packet, String user) {
 				packetslist.add(packet);
-				if(type.equals("stateless")){
+				if(type.trim().equals("stateless")){
 					String tsrc = null, tdst = null;
 					String usrc = null, udst = null;
 					String ips = null, ipd = null;
@@ -149,13 +151,13 @@ public class IDS {
 						udst = udp.destination()+"";
 					}
 			
-					if(name.equals("Blame Attack 1")) {
-						if(payload.contains("Now I own your computer")&&tdst.equals(host_port+"")&&ipd.equals(hostIP)) {
+					if(name.trim().equals("Blame Attack 1")) {
+						if(payload.contains("Now I own your computer")&&tdst.trim().equals(host_port.trim())&&ipd.trim().equals(hostIP.trim())) {
 							System.out.println(name+" detected");
 						}
 					}
 			
-					if(name.equals("Plaintext POP")) {
+					if(name.trim().equals("Plaintext POP")) {
 						String sr = null;
 					
 						if (!flag1) {
@@ -197,7 +199,7 @@ public class IDS {
 						}
 					}
 			
-					if(name.equals("TFTP attacker boot")) {
+					if(name.trim().equals("TFTP attacker")) {
 						if(udp != null)
 							if(Match("vmlinuz",payload)) {
 								if(attacker_port.equals(udst)&&hostIP.equals(ips)) {
@@ -255,7 +257,7 @@ public class IDS {
 				}
 			}
 	
-			if(name.equals("Blame Attack 2")) {
+			if(name.trim().equals("Blame Attack 2")) {
 				if(statefulstr!=null)
 					if(statefulstr.contains("Now I own your computer")) {
 						System.out.println(name + " detected");
@@ -263,7 +265,7 @@ public class IDS {
 					}
 			}
 	
-			if(name.equals("Buffer Overflow")) {
+			if(name.trim().equals("Buffer Overflow")) {
 				Boolean flag1 = false;
 				Boolean flag2 = false;
 				if(statefulstr1 != null){
